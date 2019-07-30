@@ -10,8 +10,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 const externals = {
   'vue': 'Vue',
-  'vue-router': 'VueRouter',
-  'vuex': 'Vuex',
   'axios': 'axios'
 }
 
@@ -24,8 +22,6 @@ const cdn = {
     css: [],
     js: [
       'https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.21/vue.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.0.2/vue-router.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/vuex/3.0.1/vuex.min.js',
       'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0-beta.1/axios.min.js'
     ]
   }
