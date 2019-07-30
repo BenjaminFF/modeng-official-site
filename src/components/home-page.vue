@@ -1,14 +1,14 @@
 <template>
-    <div class="home-page">
+    <div class="home-page" ref="home-page">
         <div class="header">
             <img src="../assets/imgs/logo.png"/>
-            <div class="nav" v-for="nav in navs" :class="{'nav-selected':nav.selected}">{{nav.name}}</div>
+            <div class="nav" v-for="nav in navs" :class="{'nav-selected':nav.selected}" @click="handleNavClick(nav)">{{nav.name}}</div>
         </div>
-        <div class="banner">
+        <div class="banner" ref="banner">
             <img src="https://files.modengbox.com/website/official/block1_img.png"/>
-            <img src="../assets/imgs/arrow_hover.png"/>
+            <img src="../assets/imgs/arrow_hover.png" @click="handleNavClick(navs[1])"/>
         </div>
-        <div class="block1">
+        <div class="block1" ref="block1">
             <div class="section">
                 <div class="title">广告优势-全场景投放</div>
                 <div class="subtitle">FULL SCENE DELIVERY</div>
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-        <div class="block2">
+        <div class="block2" ref="block2">
             <div class="section">
                 <div class="title">六大精准化定向</div>
                 <div class="subtitle">SIX PRECISE ORIENTATIONS</div>
@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        <div class="block3">
+        <div class="block3" ref="block3">
             <div class="section" v-for="item in block3_items">
                 <img :src="'https://files.modengbox.com/website/official/'+item.url"/>
                 <div class="item">
@@ -64,6 +64,7 @@
 </template>
 
 <script>
+    import {smoothScroll} from '../api/scroll'
     export default {
         name: "home-page",
         data() {
@@ -71,25 +72,61 @@
                 navs: [],
                 block1_items: [],
                 block2_items:[],
-                block3_items:[]
+                block3_items:[],
+                lastScrollTop:0
             }
         },
         created() {
+            window.addEventListener('scroll', this.handleScroll, true);
             this.init();
         },
         methods: {
+            handleScroll(){
+                let el=this.$refs['home-page'];
+                this.targetNav(el.scrollTop);
+            },
+            targetNav(scrollTop){
+                let curNav=this.navs.filter((nav)=>nav.selected)[0];
+                let curEl=this.$refs[curNav.ref];
+                console.log('offsetTop:'+curEl.offsetTop);
+                console.log('scrollTop'+scrollTop);
+                //如果scrollTop正在当前选中的el的区域内
+                if(curEl.offsetTop<=scrollTop&&(curEl.offsetTop+curEl.clientHeight)>=scrollTop){
+                    return;
+                }
+                let curNavIndex;
+                for(let i=0;i<this.navs.length;i++){
+                    if(this.navs[i].selected){
+                        curNavIndex=i;
+                    }
+                }
+                console.log(curNavIndex);
+                this.navs.forEach((nav)=>nav.selected=false);
+                if(scrollTop<this.lastScrollTop){
+                    this.navs[curNavIndex-1].selected=true;
+                }else {
+                    this.navs[curNavIndex+1].selected=true;
+                }
+                this.lastScrollTop=scrollTop;
+            },
+            handleNavClick(nav){
+                let targetOffsetTop=this.$refs[nav.ref].offsetTop;
+                smoothScroll(targetOffsetTop,this.$refs['home-page'],800,'vertical');
+                this.navs.forEach((nav)=>nav.selected=false);
+                nav.selected=true;
+            },
             init() {
                 let navs = [
-                    {name: '首页', href: '', selected: true},
-                    {name: '广告优势', href: '', selected: false},
-                    {name: '万物皆煤', href: '', selected: false},
-                    {name: '魔灯智媒柜机', href: '', selected: false},
-                    {name: '功能介绍', href: '', selected: false},
-                    {name: '硬件介绍', href: '', selected: false},
-                    {name: '硬件优势', href: '', selected: false},
-                    {name: '系列产品', href: '', selected: false},
-                    {name: '公司简介', href: '', selected: false},
-                    {name: '关于我们', href: '', selected: false}
+                    {name: '首页', ref: 'banner', selected: true},
+                    {name: '广告优势', ref: 'block1', selected: false},
+                    {name: '万物皆煤', ref: 'block3', selected: false},
+                    {name: '魔灯智媒柜机', ref: '', selected: false},
+                    {name: '功能介绍', ref: '', selected: false},
+                    {name: '硬件介绍', ref: '', selected: false},
+                    {name: '硬件优势', ref: '', selected: false},
+                    {name: '系列产品', ref: '', selected: false},
+                    {name: '公司简介', ref: '', selected: false},
+                    {name: '关于我们', ref: '', selected: false}
                 ]
 
                 let block1_items = [
@@ -119,6 +156,9 @@
                 this.block2_items=block2_items;
                 this.block3_items=block3_items;
             }
+        },
+        beforeDestroy() {
+            window.removeEventListener('scroll',this.handleScroll,true);
         }
     }
 </script>
@@ -127,6 +167,10 @@
     .home-page {
         width: 100%;
         height: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+        position: relative;
+        z-index: 1;
     }
 
     .header {
