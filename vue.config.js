@@ -1,7 +1,7 @@
 const path = require('path')
 
 const resolve = dir => {
-  return path.join(__dirname, dir)
+    return path.join(__dirname, dir)
 }
 
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
@@ -9,22 +9,23 @@ const productionGzipExtensions = ['js', 'css']
 const isProduction = process.env.NODE_ENV === 'production'
 
 const externals = {
-  'vue': 'Vue',
-  'axios': 'axios'
+    'vue': 'Vue',
+    'axios': 'axios'
 }
 
 const cdn = {
-  dev: {
-    css: [],
-    js: []
-  },
-  build: {
-    css: [],
-    js: [
-      'https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.21/vue.min.js',
-      'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0-beta.1/axios.min.js'
-    ]
-  }
+    dev: {
+        css: [],
+        js: []
+    },
+    build: {
+        css: [],
+        js: [
+            'https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.21/vue.min.js',
+            'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0-beta.1/axios.min.js',
+            'https://api.map.baidu.com/api?v=3.0&ak=OhdYQkCSHsfmrUdswpoq67TH&s=1'
+        ]
+    }
 }
 
 // 项目部署基础
@@ -37,38 +38,38 @@ const cdn = {
 const BASE_URL = process.env.NODE_ENV === 'production' ? '/' : '/'
 
 module.exports = {
-  publicPath: BASE_URL,
-  // 如果你不需要使用eslint，把lintOnSave设为false即可
-  lintOnSave: true,
-  chainWebpack: config => {
-    config.resolve.alias
-      .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
-      .set('_c', resolve('src/components'))
-    /**
-     * 添加CDN参数到htmlWebpackPlugin配置中
-     */
-    config.plugin('html').tap(args => {
-      if (isProduction) {
-        args[0].cdn = cdn.build
-      }
-      return args
-    })
-  },
-  // 打包时不生成.map文件
-  productionSourceMap: false,
-  // 这里写调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
-  // devServer: {
-  //   proxy: 'localhost:3000'
-  // }
-  configureWebpack: config => {
-    if (isProduction) {
-      config.plugins.push(new CompressionWebpackPlugin({
-        algorithm: 'gzip',
-        test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
-        threshold: 10240,
-        minRatio: 0.8
-      }))
-      config.externals = externals
+    publicPath: BASE_URL,
+    // 如果你不需要使用eslint，把lintOnSave设为false即可
+    lintOnSave: true,
+    chainWebpack: config => {
+        config.resolve.alias
+            .set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
+            .set('_c', resolve('src/components'))
+        /**
+         * 添加CDN参数到htmlWebpackPlugin配置中
+         */
+        config.plugin('html').tap(args => {
+            if (isProduction) {
+                args[0].cdn = cdn.build
+            }
+            return args
+        })
+    },
+    // 打包时不生成.map文件
+    productionSourceMap: false,
+    // 这里写调用接口的基础路径，来解决跨域，如果设置了代理，那你本地开发环境的axios的baseUrl要写为 '' ，即空字符串
+    // devServer: {
+    //   proxy: 'localhost:3000'
+    // }
+    configureWebpack: config => {
+        if (isProduction) {
+            config.plugins.push(new CompressionWebpackPlugin({
+                algorithm: 'gzip',
+                test: new RegExp('\\.(' + productionGzipExtensions.join('|') + ')$'),
+                threshold: 10240,
+                minRatio: 0.8
+            }))
+            config.externals = externals
+        }
     }
-  }
 }

@@ -53,12 +53,20 @@
             </div>
         </div>
         <div class="block3" ref="block3">
-            <div class="section" v-for="item in block3_items">
-                <img :src="'https://files.modengbox.com/website/official/'+item.url"/>
+            <div class="section" ref="block3_1">
+                <img :src="'https://files.modengbox.com/website/official/'+block3_items[0].url"/>
                 <div class="item">
-                    <div class="title">{{item.title}}</div>
-                    <div class="subtitle">{{item.subtitle}}</div>
-                    <div class="content">{{item.content}}</div>
+                    <div class="title">{{block3_items[0].title}}</div>
+                    <div class="subtitle">{{block3_items[0].subtitle}}</div>
+                    <div class="content">{{block3_items[0].content}}</div>
+                </div>
+            </div>
+            <div class="section" ref="block3_2">
+                <img :src="'https://files.modengbox.com/website/official/'+block3_items[1].url"/>
+                <div class="item">
+                    <div class="title">{{block3_items[1].title}}</div>
+                    <div class="subtitle">{{block3_items[1].subtitle}}</div>
+                    <div class="content">{{block3_items[1].content}}</div>
                 </div>
             </div>
         </div>
@@ -80,12 +88,12 @@
                 </div>
             </div>
         </div>
-        <div class="block5">
+        <div class="block5" ref="block5">
             <img src="https://files.modengbox.com/website/official/block6_img.png"/>
             <div class="title">柜机硬件介绍</div>
             <div class="subtitle">HARDWARE INTRODUCTION</div>
         </div>
-        <div class="block6">
+        <div class="block6" ref="block6">
             <div>
                 <div class="title">柜机硬件优势</div>
                 <div class="subtitle">THE HARDWARE ADVANTAGES</div>
@@ -120,7 +128,85 @@
             </div>
         </div>
         <div class="block8">
-
+            <div class="section">
+                <img src="https://files.modengbox.com/website/official/block9_img.jpg"/>
+            </div>
+            <div class="section">
+                <div class="title">
+                    可视化数据
+                </div>
+                <div class="division"></div>
+                <div class="content">
+                    所有投放的广告，都可生成一个广告投放结果数据报告，让广告主的广告结果清晰可见，目前线下媒体仅魔灯可做到。
+                </div>
+            </div>
+        </div>
+        <div class="block9" ref="block9">
+            <div class="title">魔灯智媒系列产品介绍</div>
+            <div class="subtitle">SERIES PRODUCTS</div>
+            <div class="content">
+                魔灯智媒融合了共享充电宝和广告传媒的特点，自主设计，自主研发的智能硬件和软件于一体的智能媒介。在国内率先以充电宝为基础，与超清屏融合为一体，运用人工智能技术打造了魔灯桌面广告机、魔灯移动广告机、魔灯小机柜、魔灯大机柜等物联网媒介系列产品，开创了国内媒介4.0新时代。
+            </div>
+        </div>
+        <div class="block10" ref="block10">
+            <div class="section">
+                <div class="title">公司简介</div>
+                <div class="subtitle">COMPANY PROFILE</div>
+                <div class="content">
+                    四川魔灯智媒文化传媒有限公司是一家“社群媒体+共享充电+物联网”的科技媒体创新企业，是中国智能媒介4.0时代的开创者和领导者。
+                    魔灯智媒以消费领域各种场景作为城市消费人群的流量入口，致力于用魔灯共享智能媒介机为客户提供真正精准、经济的城市主力消费人群媒体流量，尤其是在当今人群移动化、碎片化的时代，通过高精技术有效解决中小、小微企业广告投不起、费用高、场景单一的现实痛点。
+                </div>
+            </div>
+        </div>
+        <div class="block11" ref="block11">
+            <div class="section">
+                <div class="title">联系我们</div>
+                <div class="subtitle">CONTACT US</div>
+                <div class="content1">全国招商热线：4000-767-028</div>
+                <div class="content2">企业邮箱：mumarenkeji@163.com</div>
+                <div class="content3">
+                    公司地址：四川省成都市武侯区益州大道北段333号东方希望中心
+                    2幢4楼整层
+                </div>
+            </div>
+            <div class="section">
+                <div class="map" id="map"></div>
+            </div>
+        </div>
+        <div class="block12">
+            <div class="title">招商加盟</div>
+            <div class="content">请填写必要信息，提交后工作人员会尽快联系您</div>
+            <div class="section">
+                <div class="input-container">
+                    <input/>
+                    <img src="../assets/imgs/portrait.png"/>
+                    <div class="title">姓名：</div>
+                </div>
+                <div class="input-container">
+                    <input/>
+                    <img src="../assets/imgs/portrait.png"/>
+                    <div class="title">电话：</div>
+                </div>
+                <div class="button">提交</div>
+            </div>
+        </div>
+        <div class="bottom-bar">
+            <div class="section1">
+                <div style="width: fit-content">
+                    <img src="../assets/imgs/logo.png"/>
+                </div>
+                <div class="items-container">
+                    <div class="item" v-for="nav in bottomNavs" @click="handleNavClick(nav)">
+                        {{nav.name}}
+                    </div>
+                </div>
+                <div class="content">Copyright © 魔灯智媒文化传媒有限公司 版权所有 | 备案号: xxxxxxxxxxxxxx</div>
+                <div class="division"></div>
+            </div>
+            <div class="section2">
+                <img src="../assets/imgs/ewm.png"/>
+                <div class="title">扫码关注</div>
+            </div>
         </div>
     </div>
 </template>
@@ -137,7 +223,8 @@
                 block2_items: [],
                 block3_items: [],
                 block4_items: [],
-                block6_items: []
+                block6_items: [],
+                bottomNavs: []
             }
         },
         created() {
@@ -149,20 +236,21 @@
                 let el = this.$refs['home-page'];
                 el.scrollTop = Number(localStorage.getItem('scrollTop'));
             }
+            this.initMap();
         },
         methods: {
             init() {
                 let navs = [
                     {name: '首页', ref: 'banner', selected: true},
                     {name: '广告优势', ref: 'block1', selected: false},
-                    {name: '万物皆煤', ref: 'block3', selected: false},
-                    {name: '魔灯智媒柜机', ref: '', selected: false},
-                    {name: '功能介绍', ref: '', selected: false},
-                    {name: '硬件介绍', ref: '', selected: false},
-                    {name: '硬件优势', ref: '', selected: false},
-                    {name: '系列产品', ref: '', selected: false},
-                    {name: '公司简介', ref: '', selected: false},
-                    {name: '关于我们', ref: '', selected: false}
+                    {name: '万物皆煤', ref: 'block3_1', selected: false},
+                    {name: '魔灯智媒柜机', ref: 'block3_2', selected: false},
+                    {name: '功能介绍', ref: 'block4', selected: false},
+                    {name: '硬件介绍', ref: 'block5', selected: false},
+                    {name: '硬件优势', ref: 'block6', selected: false},
+                    {name: '系列产品', ref: 'block9', selected: false},
+                    {name: '公司简介', ref: 'block10', selected: false},
+                    {name: '联系我们', ref: 'block11', selected: false}
                 ]
 
                 let block1_items = [
@@ -241,12 +329,30 @@
                     {title: '八重安全保障', src: require('../assets/imgs/block6/icon7.png')},
                     {title: '专业化电源管理系统', src: require('../assets/imgs/block6/icon8.png')}
                 ]
+
+                let bottomNavs = navs.filter((nav,index)=>{
+                    return index!=2&&index!=3;
+                });
                 this.navs = navs;
                 this.block1_items = block1_items;
                 this.block2_items = block2_items;
                 this.block3_items = block3_items;
                 this.block4_items = block4_items;
                 this.block6_items = block6_items;
+                this.bottomNavs = bottomNavs;
+            },
+            initMap() {
+                // 创建地图
+                var map = new BMap.Map("map") // 创建地图实例
+                var point = new BMap.Point(104.071775, 30.550804) // 创建点坐标
+                map.centerAndZoom(point, 17) // 初始化地图，设置中心点坐标和地图级别
+                var myicon = new BMap.Icon(
+                    './img/location-map.png',
+                    new BMap.Size(21, 32) // 视窗大小
+                )
+                var marker = new BMap.Marker(point, {icon: myicon})
+                map.addOverlay(marker)
+                map.enableScrollWheelZoom() // 启用地图滚轮放大缩小
             },
             handleScroll() {
                 let el = this.$refs['home-page'];
@@ -256,8 +362,6 @@
             targetNav(scrollTop) {
                 let curNav = this.navs.filter((nav) => nav.selected)[0];
                 let curEl = this.$refs[curNav.ref];
-                console.log('offsetTop:' + curEl.offsetTop);
-                console.log('scrollTop' + scrollTop);
                 //如果scrollTop正在当前选中的el的区域内
                 if (curEl.offsetTop <= scrollTop && (curEl.offsetTop + curEl.clientHeight) >= scrollTop) {
                     return;
@@ -266,7 +370,6 @@
                 let lastNavIndex;
                 for (let i = 0; i < this.navs.length; i++) {
                     let el = this.$refs[this.navs[i].ref];
-                    console.log(el.offsetTop);
                     if (el.offsetTop <= scrollTop) {
                         lastNavIndex = i;
                         continue;
@@ -280,7 +383,7 @@
             },
             handleNavClick(nav) {
                 let targetOffsetTop = this.$refs[nav.ref].offsetTop;
-                smoothScroll(targetOffsetTop, this.$refs['home-page'], 800, 'vertical');
+                smoothScroll(targetOffsetTop, this.$refs['home-page'], 600, 'vertical');
                 this.navs.forEach((nav) => nav.selected = false);
                 nav.selected = true;
             }
@@ -718,7 +821,7 @@
         }
     }
 
-    .block7{
+    .block7 {
         width: 100%;
         height: 940px;
         display: flex;
@@ -730,56 +833,424 @@
         & .title {
             font-size: 40px;
             font-weight: 400;
-            color:rgba(255,255,255,1);
+            color: rgba(255, 255, 255, 1);
             margin-top: 160px;
         }
 
         & .subtitle {
             font-size: 28px;
             font-weight: 300;
-            color:rgba(255,255,255,1);
+            color: rgba(255, 255, 255, 1);
             font-family: PingFang-SC-Light;
             line-height: 54px;
         }
 
-        & .sub-block{
+        & .sub-block {
             position: absolute;
             color: white;
             left: 364px;
-            bottom:273px;
+            bottom: 273px;
 
-            & .title{
-                font-size:40px;
-                font-family:PingFang-SC-Light;
-                font-weight:300;
-                color:rgba(255,255,255,1);
-                line-height:32px;
+            & .title {
+                font-size: 40px;
+                font-family: PingFang-SC-Light;
+                font-weight: 300;
+                color: rgba(255, 255, 255, 1);
+                line-height: 32px;
                 text-align: left;
             }
 
-            & .division{
-                width:80px;
-                height:1px;
-                background:rgba(245,247,252,1);
-                margin:62px 0px;
+            & .division {
+                width: 80px;
+                height: 1px;
+                background: rgba(245, 247, 252, 1);
+                margin: 62px 0px;
             }
 
-            & .content{
-                width:465px;
-                height:49px;
-                font-size:16px;
-                font-family:PingFang-SC-Light;
-                font-weight:300;
-                color:rgba(255,255,255,1);
-                line-height:32px;
+            & .content {
+                width: 465px;
+                height: 49px;
+                font-size: 16px;
+                font-family: PingFang-SC-Light;
+                font-weight: 300;
+                color: rgba(255, 255, 255, 1);
+                line-height: 32px;
                 text-align: left;
             }
         }
     }
 
-    .block8{
+    .block8 {
         width: 100%;
         height: 740px;
         display: flex;
+
+        & .section {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(245, 247, 252, 1);
+
+            & .division {
+                width: 80px;
+                height: 1px;
+                background: rgba(56, 56, 56, 1);
+                opacity: 0.56;
+                margin: 30px 0px 62px 125px;
+            }
+
+            & .title {
+                line-height: 32px;
+                font-size: 40px;
+                font-family: PingFang-SC-Light;
+                font-weight: 300;
+                color: rgba(56, 56, 56, 1);
+                line-height: 32px;
+                text-align: left;
+                margin-left: 125px;
+            }
+
+            & .content {
+                width: 465px;
+                height: 49px;
+                font-size: 16px;
+                font-family: PingFang-SC-Light;
+                font-weight: 300;
+                color: rgba(56, 56, 56, 1);
+                line-height: 32px;
+                text-align: left;
+                margin-left: 125px;
+            }
+        }
+    }
+
+    .block9 {
+        width: 100%;
+        height: 684px;
+        background-image: url(https://files.modengbox.com/website/official/block10_bg.jpg);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        & .title {
+            font-size: 40px;
+            font-family: PingFang-SC-Regular;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 54px;
+            opacity: 0.8;
+            text-align: left;
+            margin-left: 360px;
+        }
+
+        & .subtitle {
+            font-size: 28px;
+            font-family: PingFang-SC-Light;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 1);
+            line-height: 54px;
+            text-align: left;
+            margin-left: 360px;
+        }
+
+        & .content {
+            width: 465px;
+            height: 145px;
+            font-size: 16px;
+            font-family: PingFang-SC-Regular;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 32px;
+            opacity: 0.8;
+            text-align: left;
+            margin-left: 360px;
+            margin-top: 60px;
+        }
+    }
+
+    .block10 {
+        width: 100%;
+        height: 802px;
+        background-image: url(https://files.modengbox.com/website/official/block11_img.jpg);
+        display: flex;
+        align-items: center;
+        position: relative;
+
+        & .section {
+            width: 709px;
+            height: 483px;
+            background: rgba(255, 255, 255, 1);
+            opacity: 0.8;
+            position: absolute;
+            right: 260px;
+            padding: 61px 59px;
+            box-sizing: border-box;
+
+            & .title {
+                font-size: 40px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(56, 56, 56, 1);
+                line-height: 54px;
+                text-align: left;
+            }
+
+            & .subtitle {
+                font-size: 28px;
+                font-family: PingFang-SC-Light;
+                font-weight: 300;
+                color: rgba(102, 102, 102, 1);
+                line-height: 54px;
+                text-align: left;
+            }
+
+            & .content {
+                width: 590px;
+                height: 176px;
+                font-size: 16px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(67, 67, 67, 1);
+                line-height: 32px;
+                text-align: left;
+                margin-top: 60px;
+            }
+
+        }
+    }
+
+    .block11 {
+        width: 100%;
+        height: 610px;
+        display: flex;
+
+        & .section {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            & .title {
+                width: 161px;
+                font-size: 40px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(56, 56, 56, 1);
+                line-height: 54px;
+                margin-left: 360px;
+            }
+
+            & .subtitle {
+                width: 179px;
+                font-size: 28px;
+                font-family: PingFang-SC-Light;
+                font-weight: 300;
+                color: rgba(102, 102, 102, 1);
+                line-height: 54px;
+                margin-left: 360px;
+            }
+
+            & .content1 {
+                width: fit-content;
+                font-size: 28px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(102, 102, 102, 1);
+                line-height: 54px;
+                margin-top: 60px;
+                margin-left: 360px;
+            }
+
+            & .content2 {
+                width: fit-content;
+                font-size: 16px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(102, 102, 102, 1);
+                line-height: 32px;
+                margin-left: 360px;
+            }
+
+            & .content3 {
+                width: fit-content;
+                font-size: 16px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(102, 102, 102, 1);
+                line-height: 32px;
+                margin-left: 360px;
+            }
+
+            & .map {
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+
+    .block12 {
+        width: 100%;
+        height: 802px;
+        background-image: url(https://files.modengbox.com/website/official/block13_img.jpg);
+        display: flex;
+        flex-direction: column;
+        position: relative;
+
+        & .title {
+            font-size: 40px;
+            font-family: PingFang-SC-Light;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 1);
+            line-height: 54px;
+            margin-top: 97px;
+        }
+
+        & .content {
+            font-size: 16px;
+            font-family: PingFang-SC-Regular;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 1);
+            line-height: 54px;
+        }
+
+        & .section {
+            width: 748px;
+            height: 351px;
+            background: rgba(255, 255, 255, 0.35);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-evenly;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            & .input-container {
+                width: 466px;
+                height: 56px;
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                & input {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(255, 255, 255, 0.9);
+                    outline: none;
+                    border: none;
+                    text-indent: 120px;
+                    font-size: 16px;
+                }
+
+                & img {
+                    margin-left: 18px;
+                    z-index: 1;
+                }
+
+                & .title {
+                    width: fit-content;
+                    height: fit-content;
+                    margin-left: 18px;
+                    z-index: 1;
+                    font-size: 16px;
+                    font-family: PingFang-SC-Medium;
+                    font-weight: 500;
+                    color: rgba(56, 56, 56, 1);
+                    margin-top: 0;
+                    user-select: none;
+                }
+            }
+
+            & .button {
+                width: 260px;
+                height: 56px;
+                background: rgba(255, 39, 75, 1);
+                color: white;
+                text-align: center;
+                line-height: 56px;
+                user-select: none;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .bottom-bar {
+        width: 100%;
+        height: 300px;
+        display: flex;
+        align-items: center;
+        background: rgba(245, 247, 252, 1);
+
+        & .section1 {
+            width: 70%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-sizing: border-box;
+            padding: 0px 360px;
+
+            & .items-container {
+                display: flex;
+                margin-top: 24px;
+
+                & .item {
+                    font-size: 14px;
+                    font-family: PingFang-SC-Regular;
+                    font-weight: 400;
+                    color: rgba(56, 56, 56, 1);
+                    line-height: 32px;
+                    margin-right: 24px;
+                    user-select: none;
+                    cursor: pointer;
+                }
+            }
+
+            & .content{
+                font-size:12px;
+                font-family:PingFang-SC-Regular;
+                font-weight:400;
+                color:rgba(56,56,56,1);
+                line-height:32px;
+                text-align: left;
+                user-select: none;
+            }
+
+            & .division{
+                width:587px;
+                height:1px;
+                background:rgba(56,56,56,1);
+                opacity:0.28;
+            }
+        }
+
+        & .section2 {
+            width: 30%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            & .title {
+                font-size: 16px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(255, 39, 75, 1);
+                line-height: 32px;
+            }
+
+            & img {
+                width: fit-content;
+                height: fit-content;
+            }
+        }
     }
 </style>

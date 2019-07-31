@@ -16,7 +16,7 @@ export const smoothScroll=(end, el, duration,orientation)=>{
                 }
                 el.scrollTop += pxPerTime;
             } else {
-                if (end - el.scrollTop >= 0) {
+                if (end - el.scrollTop >= -pxPerTime) {
                     return;
                 }
                 el.scrollTop -= pxPerTime;
