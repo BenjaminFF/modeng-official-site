@@ -86,8 +86,41 @@
             <div class="subtitle">HARDWARE INTRODUCTION</div>
         </div>
         <div class="block6">
-            <div class="title">柜机硬件优势</div>
-            <div class="subtitle">THE HARDWARE ADVANTAGES</div>
+            <div>
+                <div class="title">柜机硬件优势</div>
+                <div class="subtitle">THE HARDWARE ADVANTAGES</div>
+            </div>
+            <div>
+                <div class="items-container">
+                    <div class="item" v-for="(item,index) in block6_items" v-if="index<4">
+                        <img :src="item.src"/>
+                        <div class="title">{{item.title}}</div>
+                    </div>
+                </div>
+                <div class="items-container">
+                    <div class="item" v-for="(item,index) in block6_items" v-if="index>=4">
+                        <img :src="item.src"/>
+                        <div class="title">{{item.title}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block7">
+            <div class="title">智能化广告发布管理</div>
+            <div class="subtitle">INTELLIGENT ADVERTIZING MANAGEMENT</div>
+            <div class="sub-block">
+                <div class="title">
+                    智能化投放
+                </div>
+                <div class="division">
+                </div>
+                <div class="content">
+                    一部手机就可上传发布广告，实现一站式实时投放线下媒体，流程可见，轻松把控整个投放流程。
+                </div>
+            </div>
+        </div>
+        <div class="block8">
+
         </div>
     </div>
 </template>
@@ -111,10 +144,10 @@
             window.addEventListener('scroll', this.handleScroll, true);
             this.init();
         },
-        mounted(){
-            if(localStorage.getItem('scrollTop')!=null){
+        mounted() {
+            if (localStorage.getItem('scrollTop') != null) {
                 let el = this.$refs['home-page'];
-                el.scrollTop=Number(localStorage.getItem('scrollTop'));
+                el.scrollTop = Number(localStorage.getItem('scrollTop'));
             }
         },
         methods: {
@@ -198,18 +231,26 @@
                     },
                     {title: '智能充电', content: '免押金，快速充电，2元充电一小时。', src: require('../assets/imgs/block4/charge.png')}
                 ]
-                let block6_items=[
-
+                let block6_items = [
+                    {title: '信息安全保障', src: require('../assets/imgs/block6/icon1.png')},
+                    {title: 'Power IQ智能速充', src: require('../assets/imgs/block6/icon2.png')},
+                    {title: '中国平安保险', src: require('../assets/imgs/block6/icon3.png')},
+                    {title: 'RoHS欧盟环保标准', src: require('../assets/imgs/block6/icon4.png')},
+                    {title: '全国通借通还', src: require('../assets/imgs/block6/icon5.png')},
+                    {title: '舒心自带线材', src: require('../assets/imgs/block6/icon6.png')},
+                    {title: '八重安全保障', src: require('../assets/imgs/block6/icon7.png')},
+                    {title: '专业化电源管理系统', src: require('../assets/imgs/block6/icon8.png')}
                 ]
                 this.navs = navs;
                 this.block1_items = block1_items;
                 this.block2_items = block2_items;
                 this.block3_items = block3_items;
                 this.block4_items = block4_items;
+                this.block6_items = block6_items;
             },
             handleScroll() {
                 let el = this.$refs['home-page'];
-                localStorage.setItem('scrollTop',el.scrollTop);
+                localStorage.setItem('scrollTop', el.scrollTop);
                 this.targetNav(el.scrollTop);
             },
             targetNav(scrollTop) {
@@ -258,7 +299,7 @@
         overflow-x: hidden;
         overflow-y: scroll;
         position: relative;
-        z-index: 1;
+        z-index: 2;
     }
 
     .header {
@@ -269,6 +310,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-end;
+        z-index: 1;
 
         img {
             width: fit-content;
@@ -653,26 +695,6 @@
                 padding: 0px 100px;
                 position: relative;
 
-                &:nth-child(2) {
-                    &::before {
-                        position: absolute;
-                        left: 0;
-                        width: 1px;
-                        height: 80px;
-                        background-color: #9DA0B0;
-                        content: "";
-                    }
-
-                    &::after {
-                        position: absolute;
-                        right: 0;
-                        width: 1px;
-                        height: 80px;
-                        background-color: #9DA0B0;
-                        content: "";
-                    }
-                }
-
                 & img {
                     width: 64px;
                     height: 64px;
@@ -680,9 +702,10 @@
 
                 .title {
                     font-size: 18px;
-                    font-weight: bold;
-                    color: rgba(56, 56, 56, 1);
-                    line-height: 54px;
+                    font-family: PingFang-SC-Regular;
+                    font-weight: 400;
+                    color: rgba(115, 115, 115, 1);
+                    line-height: 70px;
                 }
 
                 .subtitle {
@@ -693,5 +716,70 @@
                 }
             }
         }
+    }
+
+    .block7{
+        width: 100%;
+        height: 940px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background-image: url(https://files.modengbox.com/website/official/block8_bg.jpg);
+        position: relative;
+
+        & .title {
+            font-size: 40px;
+            font-weight: 400;
+            color:rgba(255,255,255,1);
+            margin-top: 160px;
+        }
+
+        & .subtitle {
+            font-size: 28px;
+            font-weight: 300;
+            color:rgba(255,255,255,1);
+            font-family: PingFang-SC-Light;
+            line-height: 54px;
+        }
+
+        & .sub-block{
+            position: absolute;
+            color: white;
+            left: 364px;
+            bottom:273px;
+
+            & .title{
+                font-size:40px;
+                font-family:PingFang-SC-Light;
+                font-weight:300;
+                color:rgba(255,255,255,1);
+                line-height:32px;
+                text-align: left;
+            }
+
+            & .division{
+                width:80px;
+                height:1px;
+                background:rgba(245,247,252,1);
+                margin:62px 0px;
+            }
+
+            & .content{
+                width:465px;
+                height:49px;
+                font-size:16px;
+                font-family:PingFang-SC-Light;
+                font-weight:300;
+                color:rgba(255,255,255,1);
+                line-height:32px;
+                text-align: left;
+            }
+        }
+    }
+
+    .block8{
+        width: 100%;
+        height: 740px;
+        display: flex;
     }
 </style>
