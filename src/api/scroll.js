@@ -42,7 +42,7 @@ export const smoothScroll = (end, el, duration, orientation) => {
 export const isElementInViewport=(el)=>{
     let rect = el.getBoundingClientRect();
     return (
-        rect.top >= 0 &&
-        rect.bottom <= (window.innerHeight+el.offsetHeight*1/3 || document.documentElement.clientHeight+el.offsetHeight*1/3)
+        rect.top >= -el.offsetHeight/2 &&
+        rect.bottom <= (window.innerHeight+el.offsetHeight/2 || document.documentElement.clientHeight+el.offsetHeight/2)
     );
 }

@@ -1,6 +1,6 @@
 <template>
     <div class="home-page" ref="home-page">
-        <div class="header">
+        <div class="header" :style="{background:'rgba(255, 255, 255,'+headerOpacity+')'}">
             <img src="../assets/imgs/logo.png"/>
             <div class="nav" v-for="nav in navs" :class="{'nav-selected':nav.selected}" @click="handleNavClick(nav)">
                 {{nav.name}}
@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="items-container">
-                    <div v-for="(item,index) in block1_items" v-if="index>=4&&animItems[0].animated" class="item animated fadeInUp">
+                    <div v-for="(item,index) in block1_items" v-if="index>=4&&animItems[0].animated" class="item animated fadeInUp delay-200ms">
                         <img :src="'https://files.modengbox.com/website/official/'+item.url"/>
                         <p>{{item.name}}</p>
                     </div>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <div class="items-container">
-                    <div class="item animated fadeInUp" v-for="(item,index) in block2_items" v-if="index>=3&&animItems[1].animated">
+                    <div class="item animated fadeInUp delay-200ms" v-for="(item,index) in block2_items" v-if="index>=3&&animItems[1].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                         <div class="subtitle">{{item.subtitle}}</div>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="items-container">
-                    <div class="item animated fadeInUp" v-for="(item,index) in block6_items" v-if="index>=4&&animItems[6].animated">
+                    <div class="item animated fadeInUp delay-200ms" v-for="(item,index) in block6_items" v-if="index>=4&&animItems[6].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                     </div>
@@ -131,12 +131,12 @@
             <div class="section">
                 <img src="https://files.modengbox.com/website/official/block9_img.jpg"/>
             </div>
-            <div class="section">
-                <div class="title animated fadeInRight" v-if="animItems[8].animated">
+            <div class="section animated fadeInRight" v-if="animItems[8].animated">
+                <div class="title">
                     可视化数据
                 </div>
-                <div class="division animated fadeInRight" v-if="animItems[8].animated"></div>
-                <div class="content animated fadeInRight" v-if="animItems[8].animated">
+                <div class="division"></div>
+                <div class="content">
                     所有投放的广告，都可生成一个广告投放结果数据报告，让广告主的广告结果清晰可见，目前线下媒体仅魔灯可做到。
                 </div>
             </div>
@@ -184,8 +184,13 @@
                 </div>
                 <div class="input-container">
                     <input/>
-                    <img src="../assets/imgs/portrait.png"/>
+                    <img src="../assets/imgs/phone.png"/>
                     <div class="title">电话：</div>
+                </div>
+                <div class="input-container">
+                    <input class="last-input"/>
+                    <div class="captcha"></div>
+                    <img src="../assets/imgs/refresh.png" class="refresh-img"/>
                 </div>
                 <div class="button">提交</div>
             </div>
@@ -225,7 +230,8 @@
                 block4_items: [],
                 block6_items: [],
                 bottomNavs: [],
-                animItems:[]
+                animItems:[],
+                headerOpacity:0.56
             }
         },
         created() {
@@ -360,15 +366,30 @@
             initMap() {
                 // 创建地图
                 var map = new BMap.Map("map") // 创建地图实例
-                var point = new BMap.Point(104.071775, 30.550804) // 创建点坐标
-                map.centerAndZoom(point, 17) // 初始化地图，设置中心点坐标和地图级别
                 var myicon = new BMap.Icon(
-                    './img/location-map.png',
+                    require('../assets/imgs/location.png'),
                     new BMap.Size(21, 32) // 视窗大小
                 )
-                var marker = new BMap.Marker(point, {icon: myicon})
-                map.addOverlay(marker)
-                map.enableScrollWheelZoom() // 启用地图滚轮放大缩小
+                // 创建地址解析器实例
+                var myGeo = new BMap.Geocoder();
+                console.log(myGeo);
+// 将地址解析结果显示在地图上，并调整地图视野
+                myGeo.getPoint("四川省成都市武侯区益州大道北段333号东方希望中心 2幢4楼整层 ", function(point){
+                    console.log(point);
+                        if (point) {
+                            map.centerAndZoom(point, 22);
+                            map.addOverlay(new BMap.Marker(point,{icon:myicon}));
+                            map.enableScrollWheelZoom();
+                        }
+                    },
+                    "成都市");
+                // 百度地图API功能
+                /*var map = new BMap.Map("map");
+                map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+                var local = new BMap.LocalSearch(map, {
+                    renderOptions:{map: map}
+                });
+                local.search("魔灯智媒");*/
             },
             handleScroll() {
                 let el = this.$refs['home-page'];
@@ -378,7 +399,7 @@
                 if(this.animItems.filter((item)=>!item.selected).length!=0){
                     this.triggerAnim(el.scrollTop);
                 }
-                console.log(this.animItems[1].animated);
+                this.headerOpacity=0.56+el.scrollTop/100;
             },
             triggerAnim(){
                 for(let i=0;i<this.animItems.length;i++){
@@ -432,18 +453,20 @@
         overflow-x: hidden;
         overflow-y: scroll;
         position: relative;
-        z-index: 2;
+        z-index: 3;
+        background-image: url(https://files.modengbox.com/website/official/block13_img.jpg);
+        background-size:100% 100%;
     }
 
     .header {
         position: fixed;
         width: 100%;
         height: 80px;
-        background: rgba(255, 255, 255, 0.56);
         display: flex;
         align-items: center;
         justify-content: flex-end;
         z-index: 1;
+        right: 10px;
 
         img {
             width: fit-content;
@@ -500,6 +523,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+        background: white;
 
         & .section {
 
@@ -634,6 +658,7 @@
     .block3 {
         width: 100%;
         height: 1220px;
+        background: white;
 
         .section {
             display: flex;
@@ -697,6 +722,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+        background: white;
 
         & .title {
             font-size: 40px;
@@ -794,6 +820,7 @@
         flex-direction: column;
         align-items: center;
         justify-content: space-evenly;
+        background: white;
 
         & .title {
             font-size: 40px;
@@ -914,6 +941,7 @@
         width: 100%;
         height: 740px;
         display: flex;
+        background: rgba(245, 247, 252, 1);
 
         & .section {
             width: 50%;
@@ -921,7 +949,6 @@
             display: flex;
             justify-content: center;
             flex-direction: column;
-            background: rgba(245, 247, 252, 1);
 
             & .division {
                 width: 80px;
@@ -1055,6 +1082,7 @@
         width: 100%;
         height: 610px;
         display: flex;
+        background: white;
 
         & .section {
             width: 50%;
@@ -1117,6 +1145,7 @@
             & .map {
                 width: 100%;
                 height: 100%;
+                max-width: none;
             }
         }
     }
@@ -1124,7 +1153,6 @@
     .block12 {
         width: 100%;
         height: 802px;
-        background-image: url(https://files.modengbox.com/website/official/block13_img.jpg);
         display: flex;
         flex-direction: column;
         position: relative;
@@ -1161,7 +1189,7 @@
 
             & .input-container {
                 width: 466px;
-                height: 56px;
+                height: 48px;
                 position: relative;
                 display: flex;
                 align-items: center;
@@ -1177,11 +1205,35 @@
                     border: none;
                     text-indent: 120px;
                     font-size: 16px;
+                    box-sizing: border-box;
+                }
+
+                & .last-input{
+                    width: 60%;
+                    text-indent: 12px;
+                    position: relative;
+                }
+
+                & .captcha{
+                    width: 35%;
+                    height: 100%;
+                    background: white;
+                    margin-left: 5%;
+                }
+
+                & .refresh-img{
+                    position: absolute;
+                    right: 10px;
+                    cursor: pointer;
+                    width: 20px;
+                    height: 20px;
                 }
 
                 & img {
                     margin-left: 18px;
                     z-index: 1;
+                    width: 24px;
+                    height: 24px;
                 }
 
                 & .title {
@@ -1198,13 +1250,19 @@
                 }
             }
 
+            & .input-container:last-of-type{
+                & input{
+                    width: 80%;
+                }
+            }
+
             & .button {
                 width: 260px;
-                height: 56px;
+                height: 48px;
                 background: rgba(255, 39, 75, 1);
                 color: white;
                 text-align: center;
-                line-height: 56px;
+                line-height: 48px;
                 user-select: none;
                 cursor: pointer;
             }
@@ -1282,5 +1340,9 @@
                 height: fit-content;
             }
         }
+    }
+
+    .delay-200ms{
+        animation-delay: 0.2s;
     }
 </style>
