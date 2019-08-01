@@ -1,4 +1,4 @@
-export const smoothScroll=(end, el, duration,orientation)=>{
+export const smoothScroll = (end, el, duration, orientation) => {
     let flashTimes = duration / 1000 * 60;
     let pxPerTime, direction;
     if (orientation == 'vertical') {
@@ -37,4 +37,12 @@ export const smoothScroll=(end, el, duration,orientation)=>{
         requestAnimationFrame(step);
     }
     step();
+}
+
+export const isElementInViewport=(el)=>{
+    let rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.bottom <= (window.innerHeight+el.offsetHeight*1/3 || document.documentElement.clientHeight+el.offsetHeight*1/3)
+    );
 }

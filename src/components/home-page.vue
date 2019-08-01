@@ -7,23 +7,23 @@
             </div>
         </div>
         <div class="banner" ref="banner">
-            <img src="https://files.modengbox.com/website/official/block1_img.png"/>
+            <img src="https://files.modengbox.com/website/official/block1_img.png" class="animated zoomIn"/>
             <img src="../assets/imgs/arrow_hover.png" @click="handleNavClick(navs[1])"/>
         </div>
         <div class="block1" ref="block1">
             <div class="section">
-                <div class="title">广告优势-全场景投放</div>
-                <div class="subtitle">FULL SCENE DELIVERY</div>
+                <div class="title animated fadeInUp" v-if="animItems[0].animated">广告优势-全场景投放</div>
+                <div class="subtitle animated fadeInUp" v-if="animItems[0].animated">FULL SCENE DELIVERY</div>
             </div>
             <div class="section">
                 <div class="items-container">
-                    <div v-for="(item,index) in block1_items" v-if="index<4" class="item">
+                    <div v-for="(item,index) in block1_items" v-if="index<4&&animItems[0].animated" class="item animated fadeInUp">
                         <img :src="'https://files.modengbox.com/website/official/'+item.url"/>
                         <p>{{item.name}}</p>
                     </div>
                 </div>
                 <div class="items-container">
-                    <div v-for="(item,index) in block1_items" v-if="index>=4" class="item">
+                    <div v-for="(item,index) in block1_items" v-if="index>=4&&animItems[0].animated" class="item animated fadeInUp">
                         <img :src="'https://files.modengbox.com/website/official/'+item.url"/>
                         <p>{{item.name}}</p>
                     </div>
@@ -32,19 +32,19 @@
         </div>
         <div class="block2" ref="block2">
             <div class="section">
-                <div class="title">六大精准化定向</div>
-                <div class="subtitle">SIX PRECISE ORIENTATIONS</div>
+                <div class="title animated fadeInUp" v-if="animItems[1].animated">六大精准化定向</div>
+                <div class="subtitle animated fadeInUp" v-if="animItems[1].animated">SIX PRECISE ORIENTATIONS</div>
             </div>
             <div class="section">
                 <div class="items-container">
-                    <div class="item" v-for="(item,index) in block2_items" v-if="index<3">
+                    <div class="item animated fadeInUp" v-for="(item,index) in block2_items" v-if="index<3&&animItems[1].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                         <div class="subtitle">{{item.subtitle}}</div>
                     </div>
                 </div>
                 <div class="items-container">
-                    <div class="item" v-for="(item,index) in block2_items" v-if="index>=3">
+                    <div class="item animated fadeInUp" v-for="(item,index) in block2_items" v-if="index>=3&&animItems[1].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                         <div class="subtitle">{{item.subtitle}}</div>
@@ -55,7 +55,7 @@
         <div class="block3" ref="block3">
             <div class="section" ref="block3_1">
                 <img :src="'https://files.modengbox.com/website/official/'+block3_items[0].url"/>
-                <div class="item">
+                <div class="item animated fadeInRight" v-if="animItems[2].animated">
                     <div class="title">{{block3_items[0].title}}</div>
                     <div class="subtitle">{{block3_items[0].subtitle}}</div>
                     <div class="content">{{block3_items[0].content}}</div>
@@ -63,7 +63,7 @@
             </div>
             <div class="section" ref="block3_2">
                 <img :src="'https://files.modengbox.com/website/official/'+block3_items[1].url"/>
-                <div class="item">
+                <div class="item animated fadeInLeft" v-if="animItems[3].animated">
                     <div class="title">{{block3_items[1].title}}</div>
                     <div class="subtitle">{{block3_items[1].subtitle}}</div>
                     <div class="content">{{block3_items[1].content}}</div>
@@ -72,12 +72,12 @@
         </div>
         <div class="block4" ref="block4">
             <div class="section">
-                <div class="title">柜机功能介绍</div>
-                <div class="subtitle">FUNCTION INTRODUCTION</div>
+                <div class="title animated fadeInUp" v-if="animItems[4].animated">柜机功能介绍</div>
+                <div class="subtitle animated fadeInUp" v-if="animItems[4].animated">FUNCTION INTRODUCTION</div>
             </div>
             <div class="section">
                 <div class="items-container">
-                    <div class="item" v-for="item in block4_items">
+                    <div class="item animated fadeInUp" v-for="item in block4_items" v-if="animItems[4].animated">
                         <div style="display: flex;align-items: center">
                             <img :src="item.src"/>
                             <div class="title">{{item.title}}</div>
@@ -89,34 +89,34 @@
             </div>
         </div>
         <div class="block5" ref="block5">
-            <img src="https://files.modengbox.com/website/official/block6_img.png"/>
+            <img src="https://files.modengbox.com/website/official/block6_img.png" v-if="animItems[5].animated" class="animated fadeInLeft"/>
             <div class="title">柜机硬件介绍</div>
             <div class="subtitle">HARDWARE INTRODUCTION</div>
         </div>
         <div class="block6" ref="block6">
             <div>
-                <div class="title">柜机硬件优势</div>
-                <div class="subtitle">THE HARDWARE ADVANTAGES</div>
+                <div class="title animated fadeInUp" v-if="animItems[6].animated">柜机硬件优势</div>
+                <div class="subtitle animated fadeInUp" v-if="animItems[6].animated">THE HARDWARE ADVANTAGES</div>
             </div>
             <div>
                 <div class="items-container">
-                    <div class="item" v-for="(item,index) in block6_items" v-if="index<4">
+                    <div class="item animated fadeInUp" v-for="(item,index) in block6_items" v-if="index<4&&animItems[6].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                     </div>
                 </div>
                 <div class="items-container">
-                    <div class="item" v-for="(item,index) in block6_items" v-if="index>=4">
+                    <div class="item animated fadeInUp" v-for="(item,index) in block6_items" v-if="index>=4&&animItems[6].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="block7">
+        <div class="block7" ref="block7">
             <div class="title">智能化广告发布管理</div>
             <div class="subtitle">INTELLIGENT ADVERTIZING MANAGEMENT</div>
-            <div class="sub-block">
+            <div class="sub-block animated fadeInLeft" v-if="animItems[7].animated">
                 <div class="title">
                     智能化投放
                 </div>
@@ -127,29 +127,29 @@
                 </div>
             </div>
         </div>
-        <div class="block8">
+        <div class="block8" ref="block8">
             <div class="section">
                 <img src="https://files.modengbox.com/website/official/block9_img.jpg"/>
             </div>
             <div class="section">
-                <div class="title">
+                <div class="title animated fadeInRight" v-if="animItems[8].animated">
                     可视化数据
                 </div>
-                <div class="division"></div>
-                <div class="content">
+                <div class="division animated fadeInRight" v-if="animItems[8].animated"></div>
+                <div class="content animated fadeInRight" v-if="animItems[8].animated">
                     所有投放的广告，都可生成一个广告投放结果数据报告，让广告主的广告结果清晰可见，目前线下媒体仅魔灯可做到。
                 </div>
             </div>
         </div>
         <div class="block9" ref="block9">
-            <div class="title">魔灯智媒系列产品介绍</div>
-            <div class="subtitle">SERIES PRODUCTS</div>
-            <div class="content">
+            <div class="title animated fadeInLeft" v-if="animItems[9].animated">魔灯智媒系列产品介绍</div>
+            <div class="subtitle animated fadeInLeft" v-if="animItems[9].animated">SERIES PRODUCTS</div>
+            <div class="content animated fadeInLeft" v-if="animItems[9].animated">
                 魔灯智媒融合了共享充电宝和广告传媒的特点，自主设计，自主研发的智能硬件和软件于一体的智能媒介。在国内率先以充电宝为基础，与超清屏融合为一体，运用人工智能技术打造了魔灯桌面广告机、魔灯移动广告机、魔灯小机柜、魔灯大机柜等物联网媒介系列产品，开创了国内媒介4.0新时代。
             </div>
         </div>
         <div class="block10" ref="block10">
-            <div class="section">
+            <div class="section animated zoomIn" v-if="animItems[10].animated">
                 <div class="title">公司简介</div>
                 <div class="subtitle">COMPANY PROFILE</div>
                 <div class="content">
@@ -212,7 +212,7 @@
 </template>
 
 <script>
-    import {smoothScroll} from '../api/scroll'
+    import {isElementInViewport,smoothScroll} from '../api/scroll'
 
     export default {
         name: "home-page",
@@ -224,7 +224,8 @@
                 block3_items: [],
                 block4_items: [],
                 block6_items: [],
-                bottomNavs: []
+                bottomNavs: [],
+                animItems:[]
             }
         },
         created() {
@@ -330,6 +331,20 @@
                     {title: '专业化电源管理系统', src: require('../assets/imgs/block6/icon8.png')}
                 ]
 
+                let animItems=[
+                    {animated:false,ref:'block1'},
+                    {animated:false,ref:'block2'},
+                    {animated:false,ref:'block3_1'},
+                    {animated:false,ref:'block3_2'},
+                    {animated:false,ref:'block4'},
+                    {animated:false,ref:'block5'},
+                    {animated:false,ref:'block6'},
+                    {animated:false,ref:'block7'},
+                    {animated:false,ref:'block8'},
+                    {animated:false,ref:'block9'},
+                    {animated:false,ref:'block10'}
+                ]
+
                 let bottomNavs = navs.filter((nav,index)=>{
                     return index!=2&&index!=3;
                 });
@@ -340,6 +355,7 @@
                 this.block4_items = block4_items;
                 this.block6_items = block6_items;
                 this.bottomNavs = bottomNavs;
+                this.animItems=animItems;
             },
             initMap() {
                 // 创建地图
@@ -358,6 +374,21 @@
                 let el = this.$refs['home-page'];
                 localStorage.setItem('scrollTop', el.scrollTop);
                 this.targetNav(el.scrollTop);
+                //如果还有没有animated过的就trigger一下
+                if(this.animItems.filter((item)=>!item.selected).length!=0){
+                    this.triggerAnim(el.scrollTop);
+                }
+                console.log(this.animItems[1].animated);
+            },
+            triggerAnim(){
+                for(let i=0;i<this.animItems.length;i++){
+                    if(!this.animItems[i].animated){
+                        let el=this.$refs[this.animItems[i].ref];
+                        if(isElementInViewport(el)){
+                            this.animItems[i].animated=true;
+                        }
+                    }
+                }
             },
             targetNav(scrollTop) {
                 let curNav = this.navs.filter((nav) => nav.selected)[0];
@@ -377,7 +408,6 @@
                         break;
                     }
                 }
-                console.log(lastNavIndex);
                 this.navs.forEach((nav) => nav.selected = false);
                 this.navs[lastNavIndex].selected = true;
             },
@@ -1040,7 +1070,7 @@
                 font-weight: 400;
                 color: rgba(56, 56, 56, 1);
                 line-height: 54px;
-                margin-left: 360px;
+                margin-left: 300px;
             }
 
             & .subtitle {
@@ -1050,7 +1080,7 @@
                 font-weight: 300;
                 color: rgba(102, 102, 102, 1);
                 line-height: 54px;
-                margin-left: 360px;
+                margin-left: 300px;
             }
 
             & .content1 {
@@ -1061,7 +1091,7 @@
                 color: rgba(102, 102, 102, 1);
                 line-height: 54px;
                 margin-top: 60px;
-                margin-left: 360px;
+                margin-left: 300px;
             }
 
             & .content2 {
@@ -1071,7 +1101,7 @@
                 font-weight: 400;
                 color: rgba(102, 102, 102, 1);
                 line-height: 32px;
-                margin-left: 360px;
+                margin-left: 300px;
             }
 
             & .content3 {
@@ -1081,7 +1111,7 @@
                 font-weight: 400;
                 color: rgba(102, 102, 102, 1);
                 line-height: 32px;
-                margin-left: 360px;
+                margin-left: 300px;
             }
 
             & .map {
