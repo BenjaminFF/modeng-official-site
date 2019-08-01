@@ -178,21 +178,21 @@
             <div class="content">请填写必要信息，提交后工作人员会尽快联系您</div>
             <div class="section">
                 <div class="input-container">
-                    <input/>
+                    <input v-model="form.name"/>
                     <img src="../assets/imgs/portrait.png"/>
                     <div class="title">姓名：</div>
                 </div>
                 <div class="input-container">
-                    <input/>
+                    <input v-model="form.phone"/>
                     <img src="../assets/imgs/phone.png"/>
                     <div class="title">电话：</div>
                 </div>
                 <div class="input-container">
-                    <input class="last-input"/>
+                    <input class="last-input" v-model="form.captcha" placeholder="请输入右边的图形验证码"/>
                     <div class="captcha"></div>
                     <img src="../assets/imgs/refresh.png" class="refresh-img"/>
                 </div>
-                <div class="button">提交</div>
+                <div class="button" @click="submitForm">提交</div>
             </div>
         </div>
         <div class="bottom-bar">
@@ -218,6 +218,7 @@
 
 <script>
     import {isElementInViewport,smoothScroll} from '../api/scroll'
+    //import { Message } from 'element-ui';
 
     export default {
         name: "home-page",
@@ -231,7 +232,12 @@
                 block6_items: [],
                 bottomNavs: [],
                 animItems:[],
-                headerOpacity:0.56
+                headerOpacity:0.56,
+                form:{
+                    name:'',
+                    phone:'',
+                    captcha:''
+                }
             }
         },
         created() {
@@ -437,6 +443,43 @@
                 smoothScroll(targetOffsetTop, this.$refs['home-page'], 600, 'vertical');
                 this.navs.forEach((nav) => nav.selected = false);
                 nav.selected = true;
+            },
+            submitForm(){
+                if(this.form.name==''){
+                    this.$message({
+                        showClose: true,
+                        message: '名字不能为空',
+                        type: 'error',
+                        duration:1000
+                    });
+                }else if(this.form.phone==''){
+                    this.$message({
+                        showClose: true,
+                        message: '电话不能为空',
+                        type: 'error',
+                        duration:1000
+                    });
+                }else if(this.form.captcha==''){
+                    this.$message({
+                        showClose: true,
+                        message: '验证码不能为空',
+                        type: 'error',
+                        duration:1000
+                    });
+                }else {
+                    //sendDataToServer
+                    this.$message({
+                        showClose: true,
+                        message: '提交成功',
+                        type: 'success',
+                        duration:1000
+                    });
+                    this.form={
+                        name:'',
+                        phone:'',
+                        captcha:''
+                    }
+                }
             }
 
         },
@@ -499,6 +542,7 @@
     .banner {
         width: 100%;
         height: 100%;
+        background: white;
         background-image: url(https://files.modengbox.com/website/official/BANNER.jpg);
         display: flex;
         align-items: center;
