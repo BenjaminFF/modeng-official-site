@@ -197,7 +197,7 @@
                 <div class="input-container">
                     <input class="last-input" v-model="form.captcha" placeholder="请输入右边的图形验证码"/>
                     <div class="captcha">
-                        <img src="https://tms.modengbox.com/app/common/captcha/create" width="100%"
+                        <img :src="'https://tms.modengbox.com/app/common/captcha/create?requestId='+uuid" width="100%"
                              v-if="captchaVisible"/>
                     </div>
                     <img src="../assets/imgs/refresh.png" class="refresh-img" @click="refreshCaptcha()"/>
@@ -229,6 +229,7 @@
 <script>
     import {isElementInViewport, smoothScroll} from '../api/scroll'
     //import { Message } from 'element-ui';
+    const uuidv4 = require('uuid/v4');
 
     export default {
         name: "home-page",
@@ -249,12 +250,20 @@
                     captcha: ''
                 },
                 scrollbarWidth: 0,
-                captchaVisible: true
+                captchaVisible: true,
+                uuid:''
             }
         },
         created() {
             window.addEventListener('scroll', this.handleScroll, true);
             this.init();
+
+            if(localStorage.getItem('m-uuid')!=null){
+                this.uuid=localStorage.getItem('m-uuid');
+            }else {
+                this.uuid=uuidv4();
+                localStorage.setItem('m-uuid',this.uuid);
+            }
         },
         mounted() {
             let el = this.$refs['home-page'];
@@ -392,9 +401,12 @@
                 var point = new BMap.Point(104.06814459917143,30.587706714706766);
                 // 创建地址解析器实例
 // 将地址解析结果显示在地图上，并调整地图视野
-                map.centerAndZoom(point, 22);
+                map.centerAndZoom(point, 32);
                 map.addOverlay(new BMap.Marker(point, {icon: myicon}));
                 map.enableScrollWheelZoom();
+                map.addEventListener("zoomend", ()=> {
+                    map.centerAndZoom(point, map.getZoom());
+                });
             },
             handleScroll() {
                 let el = this.$refs['home-page'];
@@ -468,26 +480,35 @@
                     });
                 } else {
                     //sendDataToServer
-                    this.$message({
-                        showClose: true,
-                        message: '提交成功',
-                        type: 'success',
-                        duration: 1500
-                    });
-                    axios.get('https://tms.modengbox.com/app/common/merchants/join',{
-                        params:{
+                    axios.post('https://tms.modengbox.com/app/common/merchants/join',{
                             name:this.form.name,
                             phone:this.form.phone,
-                            valicode:this.form.captcha
-                        }
+                            valicode:this.form.captcha,
+                            requestId:this.uuid
                     }).then((res)=>{
-                        console.log(res.data);
+                        if(res.data.msg=='OK'){
+                            this.$message({
+                                showClose: true,
+                                message: '提交成功',
+                                type: 'success',
+                                duration: 1500
+                            });
+                            this.form = {
+                                name: '',
+                                phone: '',
+                                captcha: ''
+                            }
+                            this.refreshCaptcha();
+                        }else {
+                            this.$message({
+                                showClose: true,
+                                message: '验证码错误',
+                                type: 'error',
+                                duration: 1500
+                            });
+                            this.refreshCaptcha();
+                        }
                     })
-                    this.form = {
-                        name: '',
-                        phone: '',
-                        captcha: ''
-                    }
                 }
             },
             refreshCaptcha() {
@@ -1150,6 +1171,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative;
 
             & .title {
                 width: 161px;
@@ -1202,10 +1224,13 @@
                 margin-left: 300px;
             }
 
-            & .map {
+            & #map {
                 width: 100%;
                 height: 100%;
                 max-width: none;
+                position: absolute;
+                left: 0;
+                top: 0;
             }
         }
     }
