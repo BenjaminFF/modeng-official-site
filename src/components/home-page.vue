@@ -1,6 +1,6 @@
 <template>
     <div class="home-page" ref="home-page">
-        <div class="header" :style="{background:'rgba(255, 255, 255,'+headerOpacity+')'}">
+        <div class="header" :style="{background:'rgba(255, 255, 255,'+headerOpacity+')',left:-scrollbarWidth+'px'}">
             <img src="../assets/imgs/logo.png"/>
             <div class="nav" v-for="nav in navs" :class="{'nav-selected':nav.selected}" @click="handleNavClick(nav)">
                 {{nav.name}}
@@ -17,13 +17,15 @@
             </div>
             <div class="section">
                 <div class="items-container">
-                    <div v-for="(item,index) in block1_items" v-if="index<4&&animItems[0].animated" class="item animated fadeInUp">
+                    <div v-for="(item,index) in block1_items" v-if="index<4&&animItems[0].animated"
+                         class="item animated fadeInUp">
                         <img :src="'https://files.modengbox.com/website/official/'+item.url"/>
                         <p>{{item.name}}</p>
                     </div>
                 </div>
                 <div class="items-container">
-                    <div v-for="(item,index) in block1_items" v-if="index>=4&&animItems[0].animated" class="item animated fadeInUp delay-200ms">
+                    <div v-for="(item,index) in block1_items" v-if="index>=4&&animItems[0].animated"
+                         class="item animated fadeInUp delay-200ms">
                         <img :src="'https://files.modengbox.com/website/official/'+item.url"/>
                         <p>{{item.name}}</p>
                     </div>
@@ -37,14 +39,16 @@
             </div>
             <div class="section">
                 <div class="items-container">
-                    <div class="item animated fadeInUp" v-for="(item,index) in block2_items" v-if="index<3&&animItems[1].animated">
+                    <div class="item animated fadeInUp" v-for="(item,index) in block2_items"
+                         v-if="index<3&&animItems[1].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                         <div class="subtitle">{{item.subtitle}}</div>
                     </div>
                 </div>
                 <div class="items-container">
-                    <div class="item animated fadeInUp delay-200ms" v-for="(item,index) in block2_items" v-if="index>=3&&animItems[1].animated">
+                    <div class="item animated fadeInUp delay-200ms" v-for="(item,index) in block2_items"
+                         v-if="index>=3&&animItems[1].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                         <div class="subtitle">{{item.subtitle}}</div>
@@ -89,7 +93,8 @@
             </div>
         </div>
         <div class="block5" ref="block5">
-            <img src="https://files.modengbox.com/website/official/block6_img.png" v-if="animItems[5].animated" class="animated fadeInLeft"/>
+            <img src="https://files.modengbox.com/website/official/block6_img.png" v-if="animItems[5].animated"
+                 class="animated fadeInLeft"/>
             <div class="title">柜机硬件介绍</div>
             <div class="subtitle">HARDWARE INTRODUCTION</div>
         </div>
@@ -100,13 +105,15 @@
             </div>
             <div>
                 <div class="items-container">
-                    <div class="item animated fadeInUp" v-for="(item,index) in block6_items" v-if="index<4&&animItems[6].animated">
+                    <div class="item animated fadeInUp" v-for="(item,index) in block6_items"
+                         v-if="index<4&&animItems[6].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                     </div>
                 </div>
                 <div class="items-container">
-                    <div class="item animated fadeInUp delay-200ms" v-for="(item,index) in block6_items" v-if="index>=4&&animItems[6].animated">
+                    <div class="item animated fadeInUp delay-200ms" v-for="(item,index) in block6_items"
+                         v-if="index>=4&&animItems[6].animated">
                         <img :src="item.src"/>
                         <div class="title">{{item.title}}</div>
                     </div>
@@ -178,19 +185,22 @@
             <div class="content">请填写必要信息，提交后工作人员会尽快联系您</div>
             <div class="section">
                 <div class="input-container">
-                    <input v-model="form.name"/>
+                    <input v-model="form.name" maxlength="15"/>
                     <img src="../assets/imgs/portrait.png"/>
                     <div class="title">姓名：</div>
                 </div>
                 <div class="input-container">
-                    <input v-model="form.phone"/>
+                    <input v-model="form.phone" type="tel" maxlength="14"/>
                     <img src="../assets/imgs/phone.png"/>
                     <div class="title">电话：</div>
                 </div>
                 <div class="input-container">
                     <input class="last-input" v-model="form.captcha" placeholder="请输入右边的图形验证码"/>
-                    <div class="captcha"></div>
-                    <img src="../assets/imgs/refresh.png" class="refresh-img"/>
+                    <div class="captcha">
+                        <img src="https://tms.modengbox.com/app/common/captcha/create" width="100%"
+                             v-if="captchaVisible"/>
+                    </div>
+                    <img src="../assets/imgs/refresh.png" class="refresh-img" @click="refreshCaptcha()"/>
                 </div>
                 <div class="button" @click="submitForm">提交</div>
             </div>
@@ -205,7 +215,7 @@
                         {{nav.name}}
                     </div>
                 </div>
-                <div class="content">Copyright © 魔灯智媒文化传媒有限公司 版权所有 | 备案号: xxxxxxxxxxxxxx</div>
+                <div class="content">Copyright © 魔灯智媒文化传媒有限公司 版权所有 | 备案号: 蜀ICP备16010317号-2</div>
                 <div class="division"></div>
             </div>
             <div class="section2">
@@ -217,7 +227,7 @@
 </template>
 
 <script>
-    import {isElementInViewport,smoothScroll} from '../api/scroll'
+    import {isElementInViewport, smoothScroll} from '../api/scroll'
     //import { Message } from 'element-ui';
 
     export default {
@@ -231,13 +241,15 @@
                 block4_items: [],
                 block6_items: [],
                 bottomNavs: [],
-                animItems:[],
-                headerOpacity:0.56,
-                form:{
-                    name:'',
-                    phone:'',
-                    captcha:''
-                }
+                animItems: [],
+                headerOpacity: 0.56,
+                form: {
+                    name: '',
+                    phone: '',
+                    captcha: ''
+                },
+                scrollbarWidth: 0,
+                captchaVisible: true
             }
         },
         created() {
@@ -245,10 +257,11 @@
             this.init();
         },
         mounted() {
+            let el = this.$refs['home-page'];
             if (localStorage.getItem('scrollTop') != null) {
-                let el = this.$refs['home-page'];
                 el.scrollTop = Number(localStorage.getItem('scrollTop'));
             }
+            this.scrollbarWidth = el.offsetWidth - el.clientWidth;
             this.initMap();
         },
         methods: {
@@ -343,22 +356,22 @@
                     {title: '专业化电源管理系统', src: require('../assets/imgs/block6/icon8.png')}
                 ]
 
-                let animItems=[
-                    {animated:false,ref:'block1'},
-                    {animated:false,ref:'block2'},
-                    {animated:false,ref:'block3_1'},
-                    {animated:false,ref:'block3_2'},
-                    {animated:false,ref:'block4'},
-                    {animated:false,ref:'block5'},
-                    {animated:false,ref:'block6'},
-                    {animated:false,ref:'block7'},
-                    {animated:false,ref:'block8'},
-                    {animated:false,ref:'block9'},
-                    {animated:false,ref:'block10'}
+                let animItems = [
+                    {animated: false, ref: 'block1'},
+                    {animated: false, ref: 'block2'},
+                    {animated: false, ref: 'block3_1'},
+                    {animated: false, ref: 'block3_2'},
+                    {animated: false, ref: 'block4'},
+                    {animated: false, ref: 'block5'},
+                    {animated: false, ref: 'block6'},
+                    {animated: false, ref: 'block7'},
+                    {animated: false, ref: 'block8'},
+                    {animated: false, ref: 'block9'},
+                    {animated: false, ref: 'block10'}
                 ]
 
-                let bottomNavs = navs.filter((nav,index)=>{
-                    return index!=2&&index!=3;
+                let bottomNavs = navs.filter((nav, index) => {
+                    return index != 2 && index != 3;
                 });
                 this.navs = navs;
                 this.block1_items = block1_items;
@@ -367,7 +380,7 @@
                 this.block4_items = block4_items;
                 this.block6_items = block6_items;
                 this.bottomNavs = bottomNavs;
-                this.animItems=animItems;
+                this.animItems = animItems;
             },
             initMap() {
                 // 创建地图
@@ -376,47 +389,34 @@
                     require('../assets/imgs/location.png'),
                     new BMap.Size(21, 32) // 视窗大小
                 )
+                var point = new BMap.Point(104.06814459917143,30.587706714706766);
                 // 创建地址解析器实例
-                var myGeo = new BMap.Geocoder();
-                console.log(myGeo);
 // 将地址解析结果显示在地图上，并调整地图视野
-                myGeo.getPoint("四川省成都市武侯区益州大道北段333号东方希望中心 2幢4楼整层 ", function(point){
-                    console.log(point);
-                        if (point) {
-                            map.centerAndZoom(point, 22);
-                            map.addOverlay(new BMap.Marker(point,{icon:myicon}));
-                            map.enableScrollWheelZoom();
-                        }
-                    },
-                    "成都市");
-                // 百度地图API功能
-                /*var map = new BMap.Map("map");
-                map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
-                var local = new BMap.LocalSearch(map, {
-                    renderOptions:{map: map}
-                });
-                local.search("魔灯智媒");*/
+                map.centerAndZoom(point, 22);
+                map.addOverlay(new BMap.Marker(point, {icon: myicon}));
+                map.enableScrollWheelZoom();
             },
             handleScroll() {
                 let el = this.$refs['home-page'];
                 localStorage.setItem('scrollTop', el.scrollTop);
                 this.targetNav(el.scrollTop);
                 //如果还有没有animated过的就trigger一下
-                if(this.animItems.filter((item)=>!item.selected).length!=0){
+                if (this.animItems.filter((item) => !item.selected).length != 0) {
                     this.triggerAnim(el.scrollTop);
                 }
-                this.headerOpacity=0.56+el.scrollTop/100;
+                this.headerOpacity = 0.56 + el.scrollTop / 100;
             },
-            triggerAnim(){
-                for(let i=0;i<this.animItems.length;i++){
-                    if(!this.animItems[i].animated){
-                        let el=this.$refs[this.animItems[i].ref];
-                        if(isElementInViewport(el)){
-                            this.animItems[i].animated=true;
+            triggerAnim() {
+                for (let i = 0; i < this.animItems.length; i++) {
+                    if (!this.animItems[i].animated) {
+                        let el = this.$refs[this.animItems[i].ref];
+                        if (isElementInViewport(el)) {
+                            this.animItems[i].animated = true;
                         }
                     }
                 }
             },
+            //targetNav是在每次滑动的时候触发
             targetNav(scrollTop) {
                 let curNav = this.navs.filter((nav) => nav.selected)[0];
                 let curEl = this.$refs[curNav.ref];
@@ -444,42 +444,57 @@
                 this.navs.forEach((nav) => nav.selected = false);
                 nav.selected = true;
             },
-            submitForm(){
-                if(this.form.name==''){
+            submitForm() {
+                if (this.form.name == '') {
                     this.$message({
                         showClose: true,
                         message: '名字不能为空',
                         type: 'error',
-                        duration:1000
+                        duration: 1000
                     });
-                }else if(this.form.phone==''){
+                } else if (this.form.phone == '') {
                     this.$message({
                         showClose: true,
                         message: '电话不能为空',
                         type: 'error',
-                        duration:1000
+                        duration: 1500
                     });
-                }else if(this.form.captcha==''){
+                } else if (this.form.captcha == '') {
                     this.$message({
                         showClose: true,
                         message: '验证码不能为空',
                         type: 'error',
-                        duration:1000
+                        duration: 1500
                     });
-                }else {
+                } else {
                     //sendDataToServer
                     this.$message({
                         showClose: true,
                         message: '提交成功',
                         type: 'success',
-                        duration:1000
+                        duration: 1500
                     });
-                    this.form={
-                        name:'',
-                        phone:'',
-                        captcha:''
+                    axios.get('https://tms.modengbox.com/app/common/merchants/join',{
+                        params:{
+                            name:this.form.name,
+                            phone:this.form.phone,
+                            valicode:this.form.captcha
+                        }
+                    }).then((res)=>{
+                        console.log(res.data);
+                    })
+                    this.form = {
+                        name: '',
+                        phone: '',
+                        captcha: ''
                     }
                 }
+            },
+            refreshCaptcha() {
+                this.captchaVisible = false;
+                this.$nextTick(()=>{
+                    this.captchaVisible = true;
+                })
             }
 
         },
@@ -495,21 +510,22 @@
         height: 100%;
         overflow-x: hidden;
         overflow-y: scroll;
-        position: relative;
         z-index: 3;
+        position: relative;
         background-image: url(https://files.modengbox.com/website/official/block13_img.jpg);
-        background-size:100% 100%;
+        background-size: 100% 100%;
     }
 
     .header {
         position: fixed;
+        top: 0;
         width: 100%;
         height: 80px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         z-index: 1;
-        right: 10px;
+        box-sizing: border-box;
 
         img {
             width: fit-content;
@@ -1252,20 +1268,29 @@
                     box-sizing: border-box;
                 }
 
-                & .last-input{
+                & .last-input {
                     width: 60%;
                     text-indent: 12px;
                     position: relative;
                 }
 
-                & .captcha{
+                & .captcha {
                     width: 35%;
                     height: 100%;
                     background: white;
                     margin-left: 5%;
+                    position: relative;
+
+                    & img {
+                        width: 70%;
+                        height: 100%;
+                        position: absolute;
+                        left: 0;
+                        margin-left: 0;
+                    }
                 }
 
-                & .refresh-img{
+                & .refresh-img {
                     position: absolute;
                     right: 10px;
                     cursor: pointer;
@@ -1294,8 +1319,8 @@
                 }
             }
 
-            & .input-container:last-of-type{
-                & input{
+            & .input-container:last-of-type {
+                & input {
                     width: 80%;
                 }
             }
@@ -1345,21 +1370,21 @@
                 }
             }
 
-            & .content{
-                font-size:12px;
-                font-family:PingFang-SC-Regular;
-                font-weight:400;
-                color:rgba(56,56,56,1);
-                line-height:32px;
+            & .content {
+                font-size: 12px;
+                font-family: PingFang-SC-Regular;
+                font-weight: 400;
+                color: rgba(56, 56, 56, 1);
+                line-height: 32px;
                 text-align: left;
                 user-select: none;
             }
 
-            & .division{
-                width:587px;
-                height:1px;
-                background:rgba(56,56,56,1);
-                opacity:0.28;
+            & .division {
+                width: 587px;
+                height: 1px;
+                background: rgba(56, 56, 56, 1);
+                opacity: 0.28;
             }
         }
 
@@ -1386,7 +1411,7 @@
         }
     }
 
-    .delay-200ms{
+    .delay-200ms {
         animation-delay: 0.2s;
     }
 </style>

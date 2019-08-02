@@ -11,12 +11,14 @@ export const smoothScroll = (end, el, duration, orientation) => {
     let step = () => {
         if (orientation == 'vertical') {
             if (direction == 'down') {
-                if (end - el.scrollTop <= 0) {
+                if (end - el.scrollTop <= pxPerTime) {
+                    el.scrollTop=end+1;   //让end+1是配合home-page里面的targetNav
                     return;
                 }
                 el.scrollTop += pxPerTime;
             } else {
                 if (end - el.scrollTop >= -pxPerTime) {
+                    el.scrollTop=end+1;
                     return;
                 }
                 el.scrollTop -= pxPerTime;

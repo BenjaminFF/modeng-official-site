@@ -20,13 +20,7 @@ const cdn = {
         js: []
     },
     build: {
-        css: [],
-        js: [
-            'https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.21/vue.min.js',
-            'https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0-beta.1/axios.min.js',
-            'https://api.map.baidu.com/api?v=3.0&ak=OhdYQkCSHsfmrUdswpoq67TH&s=1',
-            'https://cdn.bootcss.com/element-ui/2.11.1/index.js'
-        ]
+        css: []
     }
 }
 
